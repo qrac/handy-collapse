@@ -18,6 +18,7 @@ class HandyCollapse {
             activeClass: "is-active",
             isAnimation: true,
             closeOthers: true,
+            changeHeight: true,
             animationSpeed: 400,
             cssEasing: "ease-in-out",
             onSlideStart: () => false,
@@ -43,12 +44,12 @@ class HandyCollapse {
     initItems() {
         this.itemsStatus = {};
         Array.prototype.slice.call(this.toggleBodyEls).forEach(contentEl => {
-           this.setItem(contentEl);
+            this.setItem(contentEl);
         });
     }
     /**
-     * 
-     * @param {HtmlElement} element 
+     *
+     * @param {HtmlElement} element
      */
     setItem(element) {
         element.style.overflow = "hidden";
@@ -57,7 +58,7 @@ class HandyCollapse {
         const id = element.getAttribute(this.toggleContentAttr);
         this.setItemStatus(id, isOpen);
         if (!isOpen) {
-            this.close(id, false, false);
+            this.close(id, false, false, this.changeHeight);
         } else {
             this.open(id, false, false);
         }
@@ -102,7 +103,7 @@ class HandyCollapse {
         if (this.itemsStatus[id].isOpen === false) {
             this.open(id, isRunCallback, this.isAnimation);
         } else {
-            this.close(id, isRunCallback, this.isAnimation);
+            this.close(id, isRunCallback, this.isAnimation, this.changeHeight);
         }
     }
     /**
@@ -162,7 +163,7 @@ class HandyCollapse {
      * Close accordion
      * @param {string} id - accordion ID
      */
-    close(id, isRunCallback = true, isAnimation = true) {
+    close(id, isRunCallback = true, isAnimation = true, changeHeight = true) {
         if (!id) return;
         if (!this.itemsStatus.hasOwnProperty(id)) {
             this.setItemStatus(id, false);
@@ -174,10 +175,12 @@ class HandyCollapse {
         const toggleBody = document.querySelector(`[${this.toggleContentAttr}='${id}']`);
         toggleBody.style.overflow = "hidden";
         toggleBody.classList.remove(this.activeClass);
-        toggleBody.style.maxHeight = toggleBody.clientHeight + "px";
-        setTimeout(() => {
-            toggleBody.style.maxHeight = "0px";
-        }, 5);
+        if (changeHeight) {
+            toggleBody.style.maxHeight = toggleBody.clientHeight + "px";
+            setTimeout(() => {
+                toggleBody.style.maxHeight = "0px";
+            }, 5);
+        }
 
         //Buttons : Remove activeClass
         const toggleButton = document.querySelectorAll(`[${this.toggleButtonAttr}='${id}']`);
