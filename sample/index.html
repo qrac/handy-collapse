@@ -73,6 +73,12 @@
                         nameSpace: "nested",
                         closeOthers: false
                     });
+                    //Disabled
+                    const disabled = new HandyCollapse({
+                        nameSpace: "disabled",
+                        closeOthers: false,
+                        contentDisabled: true
+                    });
                     //Callback
                     const callback = new HandyCollapse({
                         nameSpace: "callback",
@@ -260,6 +266,85 @@
                                             pariatur. Excepteur sint occaecatcupidatat<br />
                                             non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                         </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <hr />
+            <!-- Disabled -->
+            <section class="section">
+                <h1 class="title is-1">Disabled Content</h1>
+                <button
+                    type="button"
+                    class="button is-primary is-fullwidth is-medium"
+                    data-disabled-control="content01"
+                >
+                    Content 01
+                </button>
+                <div data-disabled-content="content01">
+                    <div class="box">
+                        <div class="field">
+                            <div class="control">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input class="input" type="text" placeholder="Text input" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <label class="checkbox">
+                                    <input type="checkbox" />
+                                    Remember me
+                                </label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <textarea class="textarea" placeholder="e.g. Hello world"></textarea>
+                            </div>
+                        </div>
+                        <button
+                            type="button"
+                            class="button is-info is-fullwidth is-medium"
+                            data-disabled-control="child01"
+                        >
+                            Child Content 01
+                        </button>
+                        <div data-disabled-content="child01">
+                            <div class="box" style="background-color:#FFF">
+                                <div class="field">
+                                    <div class="control">
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor incididunt ut labore et dolore magna aliqua.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input" type="text" placeholder="Text input" />
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <label class="checkbox">
+                                            <input type="checkbox" />
+                                            Remember me
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <textarea class="textarea" placeholder="e.g. Hello world"></textarea>
                                     </div>
                                 </div>
                             </div>

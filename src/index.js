@@ -19,6 +19,7 @@ class HandyCollapse {
             isAnimation: true,
             closeOthers: true,
             changeHeight: true,
+            contentDisabled: false,
             animationSpeed: 400,
             cssEasing: "ease-in-out",
             onSlideStart: () => false,
@@ -58,7 +59,7 @@ class HandyCollapse {
         const id = element.getAttribute(this.toggleContentAttr);
         this.setItemStatus(id, isOpen);
         if (!isOpen) {
-            this.close(id, false, false, this.changeHeight);
+            this.close(id, false, false);
         } else {
             this.open(id, false, false);
         }
@@ -103,7 +104,7 @@ class HandyCollapse {
         if (this.itemsStatus[id].isOpen === false) {
             this.open(id, isRunCallback, this.isAnimation);
         } else {
-            this.close(id, isRunCallback, this.isAnimation, this.changeHeight);
+            this.close(id, isRunCallback, this.isAnimation);
         }
     }
     /**
@@ -130,6 +131,43 @@ class HandyCollapse {
         const toggleBody = document.querySelector(`[${this.toggleContentAttr}='${id}']`);
         const clientHeight = this.getTargetHeight(toggleBody);
         toggleBody.classList.add(this.activeClass);
+
+        if (this.contentDisabled) {
+            const disabledInput = `[${this.toggleContentAttr}='${id}'] input`;
+            const disabledTextarea = `[${this.toggleContentAttr}='${id}'] textarea`;
+            const disabledFormEls = `${disabledInput}, ${disabledTextarea}`;
+            const disabledEls = toggleBody.querySelectorAll(disabledFormEls);
+            //console.log(disabledFormEls);
+            //console.log(disabledEls);
+            Array.prototype.slice.call(disabledEls).forEach((disabledEl, index) => {
+                disabledEl.disabled = false;
+            });
+        }
+
+        if (this.contentDisabled) {
+            const disabledInput = `[${this.toggleContentAttr}='${id}'] input`;
+            const disabledTextarea = `[${this.toggleContentAttr}='${id}'] textarea`;
+            const disabledFormEls = `${disabledInput}, ${disabledTextarea}`;
+            const disabledEls = toggleBody.querySelectorAll(disabledFormEls);
+            //console.log(disabledFormEls);
+            //console.log(disabledEls);
+            Array.prototype.slice.call(disabledEls).forEach((disabledEl, index) => {
+                disabledEl.disabled = false;
+            });
+            const disabledNestInput = `[${this.toggleContentAttr}='${id}'] [${
+                this.toggleContentAttr
+            }]:not(.is-active) input`;
+            const disabledNestTextarea = `[${this.toggleContentAttr}='${id}'] [${
+                this.toggleContentAttr
+            }]:not(.is-active) textarea`;
+            const disabledNestFormEls = `${disabledNestInput}, ${disabledNestTextarea}`;
+            const disabledNestEls = toggleBody.querySelectorAll(disabledNestFormEls);
+            //console.log(disabledNestFormEls);
+            //console.log(disabledNestEls);
+            Array.prototype.slice.call(disabledNestEls).forEach((disabledNestEl, index) => {
+                disabledNestEl.disabled = true;
+            });
+        }
 
         //Button : Add activeClass
         const toggleButton = document.querySelectorAll(`[${this.toggleButtonAttr}='${id}']`);
@@ -163,7 +201,7 @@ class HandyCollapse {
      * Close accordion
      * @param {string} id - accordion ID
      */
-    close(id, isRunCallback = true, isAnimation = true, changeHeight = true) {
+    close(id, isRunCallback = true, isAnimation = true) {
         if (!id) return;
         if (!this.itemsStatus.hasOwnProperty(id)) {
             this.setItemStatus(id, false);
@@ -175,11 +213,23 @@ class HandyCollapse {
         const toggleBody = document.querySelector(`[${this.toggleContentAttr}='${id}']`);
         toggleBody.style.overflow = "hidden";
         toggleBody.classList.remove(this.activeClass);
-        if (changeHeight) {
+        if (this.changeHeight) {
             toggleBody.style.maxHeight = toggleBody.clientHeight + "px";
             setTimeout(() => {
                 toggleBody.style.maxHeight = "0px";
             }, 5);
+        }
+
+        if (this.contentDisabled) {
+            const disabledInput = `[${this.toggleContentAttr}='${id}'] input`;
+            const disabledTextarea = `[${this.toggleContentAttr}='${id}'] textarea`;
+            const disabledFormEls = `${disabledInput}, ${disabledTextarea}`;
+            const disabledEls = toggleBody.querySelectorAll(disabledFormEls);
+            //console.log(disabledFormEls);
+            //console.log(disabledEls);
+            Array.prototype.slice.call(disabledEls).forEach((disabledEl, index) => {
+                disabledEl.disabled = true;
+            });
         }
 
         //Buttons : Remove activeClass
