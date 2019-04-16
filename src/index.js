@@ -15,11 +15,11 @@ class HandyCollapse {
             nameSpace: "hc",
             toggleButtonAttr: `data-${options.nameSpace || "hc"}-control`,
             toggleContentAttr: `data-${options.nameSpace || "hc"}-content`,
+            toggleHiddenAttr: `data-${options.nameSpace || "hc"}-hidden`,
             activeClass: "is-active",
             isAnimation: true,
             closeOthers: true,
             changeHeight: true,
-            contentDisabled: false,
             animationSpeed: 400,
             cssEasing: "ease-in-out",
             onSlideStart: () => false,
@@ -27,7 +27,8 @@ class HandyCollapse {
         };
         Object.assign(this, defaultOptions, options);
         this.toggleBodyEls = document.querySelectorAll(`[${this.toggleContentAttr}]`);
-        this.toggleButtomEls = document.querySelectorAll(`[${this.toggleButtonAttr}]`);
+        this.toggleButtonEls = document.querySelectorAll(`[${this.toggleButtonAttr}]`);
+        this.toggleHiddenEls = document.querySelectorAll(`[${this.toggleHiddenAttr}]`);
         this.itemsStatus = {};
         this.init();
     }
@@ -35,7 +36,7 @@ class HandyCollapse {
         if (this.toggleBodyEls) {
             this.initItems();
         }
-        if (this.toggleButtomEls) {
+        if (this.toggleButtonEls) {
             this.setListner();
         }
     }
@@ -68,7 +69,7 @@ class HandyCollapse {
      * Add toggleButton Listners
      */
     setListner() {
-        Array.prototype.slice.call(this.toggleButtomEls).forEach(buttonEl => {
+        Array.prototype.slice.call(this.toggleButtonEls).forEach(buttonEl => {
             // event
             const id = buttonEl.getAttribute(this.toggleButtonAttr);
             if (id) {
@@ -132,42 +133,12 @@ class HandyCollapse {
         const clientHeight = this.getTargetHeight(toggleBody);
         toggleBody.classList.add(this.activeClass);
 
-        if (this.contentDisabled) {
-            const disabledInput = `[${this.toggleContentAttr}='${id}'] input`;
-            const disabledTextarea = `[${this.toggleContentAttr}='${id}'] textarea`;
-            const disabledFormEls = `${disabledInput}, ${disabledTextarea}`;
-            const disabledEls = toggleBody.querySelectorAll(disabledFormEls);
-            //console.log(disabledFormEls);
-            //console.log(disabledEls);
-            Array.prototype.slice.call(disabledEls).forEach((disabledEl, index) => {
-                disabledEl.disabled = false;
-            });
-        }
-
-        if (this.contentDisabled) {
-            const disabledInput = `[${this.toggleContentAttr}='${id}'] input`;
-            const disabledTextarea = `[${this.toggleContentAttr}='${id}'] textarea`;
-            const disabledFormEls = `${disabledInput}, ${disabledTextarea}`;
-            const disabledEls = toggleBody.querySelectorAll(disabledFormEls);
-            //console.log(disabledFormEls);
-            //console.log(disabledEls);
-            Array.prototype.slice.call(disabledEls).forEach((disabledEl, index) => {
-                disabledEl.disabled = false;
-            });
-            const disabledNestInput = `[${this.toggleContentAttr}='${id}'] [${
-                this.toggleContentAttr
-            }]:not(.is-active) input`;
-            const disabledNestTextarea = `[${this.toggleContentAttr}='${id}'] [${
-                this.toggleContentAttr
-            }]:not(.is-active) textarea`;
-            const disabledNestFormEls = `${disabledNestInput}, ${disabledNestTextarea}`;
-            const disabledNestEls = toggleBody.querySelectorAll(disabledNestFormEls);
-            //console.log(disabledNestFormEls);
-            //console.log(disabledNestEls);
-            Array.prototype.slice.call(disabledNestEls).forEach((disabledNestEl, index) => {
-                disabledNestEl.disabled = true;
-            });
-        }
+        //Hidden
+        const hidden = `[${this.toggleHiddenAttr}='${id}']`;
+        const hiddenEls = toggleBody.querySelectorAll(hidden);
+        Array.prototype.slice.call(hiddenEls).forEach((hiddenEl, index) => {
+            hiddenEl.setAttribute("aria-hidden", "false");
+        });
 
         //Button : Add activeClass
         const toggleButton = document.querySelectorAll(`[${this.toggleButtonAttr}='${id}']`);
@@ -220,17 +191,12 @@ class HandyCollapse {
             }, 5);
         }
 
-        if (this.contentDisabled) {
-            const disabledInput = `[${this.toggleContentAttr}='${id}'] input`;
-            const disabledTextarea = `[${this.toggleContentAttr}='${id}'] textarea`;
-            const disabledFormEls = `${disabledInput}, ${disabledTextarea}`;
-            const disabledEls = toggleBody.querySelectorAll(disabledFormEls);
-            //console.log(disabledFormEls);
-            //console.log(disabledEls);
-            Array.prototype.slice.call(disabledEls).forEach((disabledEl, index) => {
-                disabledEl.disabled = true;
-            });
-        }
+        //Hidden
+        const hidden = `[${this.toggleHiddenAttr}='${id}']`;
+        const hiddenEls = toggleBody.querySelectorAll(hidden);
+        Array.prototype.slice.call(hiddenEls).forEach((hiddenEl, index) => {
+            hiddenEl.setAttribute("aria-hidden", "true");
+        });
 
         //Buttons : Remove activeClass
         const toggleButton = document.querySelectorAll(`[${this.toggleButtonAttr}='${id}']`);
