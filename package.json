@@ -1,13 +1,13 @@
 {
   "name": "@qrac/handy-collapse",
-  "version": "0.1.7",
+  "version": "0.1.12",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "A pure Javascript module for accordion/collapse UI without JQuery",
   "main": "dist/handy-collapse.js",
-  "author": "R Sakai",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sk-rt/handy-collapse.git"
-  },
+  "author": "qrac",
+  "repository": "https://github.com/qrac/handy-collapse",
   "keywords": [
     "js",
     "vanillajs",

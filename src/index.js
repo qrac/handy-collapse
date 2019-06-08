@@ -230,7 +230,7 @@ class HandyCollapse {
      */
     getTargetHeight(targetEl) {
         if (!targetEl) return;
-        const cloneEl = targetEl.cloneNode(true);
+        const cloneEl = targetEl.cloneNode(false);
         const parentEl = targetEl.parentNode;
         cloneEl.style.maxHeight = "none";
         cloneEl.style.opacity = "0";
